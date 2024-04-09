@@ -23,3 +23,5 @@ local function gradientTransition(startColors, endColors, UIGradient_Instance)
 	UIGradient_Instance.Color = endColors
 	transitionTime = 0
 end
+
+return gradientTransition
