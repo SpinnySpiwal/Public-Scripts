@@ -1045,17 +1045,24 @@ local function loadGithubScript(name, folder)
 
 	return result[1] and result[2]() or nil
 end
+--> End ~ Utility Functions <--
 
 local AES = public
-
 local HashLib = loadGithubScript("HashLib", "HashLib")
-print(HashLib)
+
+function crypt.hash(str, algorithm)
+    local allAlgorithms = {'sha1', 'sha384', 'sha512', 'md5', 'sha256', 'sha3-224', 'sha3-256', 'sha3-512'}
+	local algorithmExists = table.find(allAlgorithms, algorithm)
+	assert(str, "crypt.hash ~ A string to hash is required!")
+    assert(algorithmExists, "crypt.hash ~ This algorithm does not exist or is not supported!")
+    return HashLib[algorithm](str)
+end
 
 function crypt.encrypt(str, key, iv, encryptionType)
 	if type(key) == "table" then
 		local k = ""
 		for i = 1, #key do
-			k ..= string.char(key[i])
+			k = k .. string.char(key[i])
 		end
 		key = k
 		k = nil
@@ -1072,8 +1079,8 @@ function crypt.encrypt(str, key, iv, encryptionType)
 		iv = iv_new
 	end
 
-	assert(key, "crypt.encrypt ~ Key not specified!")
-	assert(encryptionType, "An encryption type must be specified!")
+	assert(key, "crypt.encrypt ~ key not specified!")
+	assert(encryptionType, "crypt.encrypt ~ An encryption type must be specified!")
 	assert(typeof(str) == "string", "crypt.encrypt ~ The input string must be a string!")
 	assert(typeof(encryptionType) == "string", "crypt.encrypt ~ The encryption type must be a string!")
 
