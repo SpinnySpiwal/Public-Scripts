@@ -1048,21 +1048,6 @@ end
 --> End ~ Utility Functions <--
 
 local AES = public
-local HashLib = loadGithubScript("HashLib", "HashLib")
-
-print("Waiting for HashLib to load...")
-repeat task.wait() until HashLib
-print("HashLib Loaded")
-local all = ""
-for k,v in pairs(HashLib) do all = all .. k .. ", " end
-setclipboard(all)
-function crypt.hash(str, algorithm)
-    local allAlgorithms = {'sha1', 'sha384', 'sha512', 'md5', 'sha256', 'sha3-224', 'sha3_256', 'sha3-512'}
-	local algorithmExists = table.find(allAlgorithms, algorithm)
-	assert(str, "crypt.hash ~ A string to hash is required!")
-    assert(algorithmExists, "crypt.hash ~ This algorithm does not exist or is not supported!")
-    return HashLib[algorithm](str)
-end
 
 function crypt.encrypt(str, key, iv, encryptionType)
 	if type(key) == "table" then
@@ -1104,7 +1089,7 @@ function crypt.decrypt(encryptedStr, key, iv, encryptionType)
 	if type(key) == "table" then
 		local k = ""
 		for i = 1, #key do
-			k ..= string.char(key[i])
+			k = k .. string.char(key[i])
 		end
 		key = k
 		k = nil
@@ -1141,6 +1126,36 @@ function crypt.generatekey(length)
 		iv[i] = math.random(0, 255)
 	end
 	return iv
+end
+
+local HashLib = loadGithubScript("HashLib", "HashLib")
+
+print("Waiting for Hash Library")
+repeat task.wait() until HashLib
+assert(HashLib, "Hash Library is nil, this should NEVER happen!")
+print("Hash Library Loaded!")
+
+local allAlgorithms = {
+	"md5", "hmac", "sha1",
+	"sha3_256", "sha3_224",
+	"sha3_384", "sha3_512",
+	"sha224", "sha256",
+	"sha384", "sha512",
+	"sha512_224", "sha512_256",
+	"shake128", "shake256",
+}
+
+function crypt.hash(str, algorithm)
+	assert(str, "crypt.hash ~ A string to hash is required!")
+	assert(algorithm, "crypt.hash ~ an algorithm is required!")
+
+	--> Fix for UNC
+	algorithm = algorithm:gsub("-", "_")
+	local algorithmExists = table.find(allAlgorithms, algorithm)
+	assert(algorithmExists, "crypt.hash ~ This algorithm does not exist or is not supported!")
+
+
+    return HashLib[algorithm](str)
 end
 
 return crypt
