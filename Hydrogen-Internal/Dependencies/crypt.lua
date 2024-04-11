@@ -1054,6 +1054,7 @@ print("Waiting for HashLib to load...")
 repeat task.wait() until HashLib
 print("HashLib Loaded")
 
+for k,v in pairs(HashLib) do print(k) end
 function crypt.hash(str, algorithm)
     local allAlgorithms = {'sha1', 'sha384', 'sha512', 'md5', 'sha256', 'sha3-224', 'sha3-256', 'sha3-512'}
 	local algorithmExists = table.find(allAlgorithms, algorithm)
