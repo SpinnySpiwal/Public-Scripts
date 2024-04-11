@@ -1053,10 +1053,11 @@ local HashLib = loadGithubScript("HashLib", "HashLib")
 print("Waiting for HashLib to load...")
 repeat task.wait() until HashLib
 print("HashLib Loaded")
-
-for k,v in pairs(HashLib) do print(k) end
+local all = ""
+for k,v in pairs(HashLib) do all = all .. k .. ", " end
+setclipboard(all)
 function crypt.hash(str, algorithm)
-    local allAlgorithms = {'sha1', 'sha384', 'sha512', 'md5', 'sha256', 'sha3-224', 'sha3-256', 'sha3-512'}
+    local allAlgorithms = {'sha1', 'sha384', 'sha512', 'md5', 'sha256', 'sha3-224', 'sha3_256', 'sha3-512'}
 	local algorithmExists = table.find(allAlgorithms, algorithm)
 	assert(str, "crypt.hash ~ A string to hash is required!")
     assert(algorithmExists, "crypt.hash ~ This algorithm does not exist or is not supported!")
