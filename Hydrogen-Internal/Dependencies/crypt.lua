@@ -1035,7 +1035,22 @@ end
 
 --> Main Crypt Library <--
 --> By SpinnySpiwal <--
+
+--> Utility Functions <--
+local function loadGithubScript(name, folder)
+    folder = folder or "Dependencies"
+	local result = ({pcall(loadstring,
+		game:HttpGet("https://raw.github.com/SpinnySpiwal/Public-Scripts/main/Hydrogen-Internal/" .. folder .. "/" .. name .. ".lua")
+	)})
+
+	return result[1] and result[2]() or nil
+end
+
 local AES = public
+
+local HashLib = loadGithubScript("HashLib", "HashLib")
+print(HashLib)
+
 function crypt.encrypt(str, key, iv, encryptionType)
 	if type(key) == "table" then
 		local k = ""

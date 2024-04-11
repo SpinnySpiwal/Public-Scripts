@@ -62,15 +62,16 @@ API:
 
 --]=]---------------------------------------------------------------------------
 
-local function loadGithubScript(name)
+local function loadGithubScript(name, folder)
+    folder = folder or "Dependencies"
 	local result = ({pcall(loadstring,
-		game:HttpGet("https://raw.github.com/SpinnySpiwal/Public-Scripts/main/Hydrogen-Internal/Dependencies/" .. name .. ".lua")
+		game:HttpGet("https://raw.github.com/SpinnySpiwal/Public-Scripts/main/Hydrogen-Internal/" .. folder .. "/" .. name .. ".lua")
 	)})
 
 	return result[1] and result[2]() or nil
 end
 
-local Base64 = loadGithubScript("Base64")
+local Base64 = loadGithubScript("Base64", "HashLib")
 
 --------------------------------------------------------------------------------
 -- LOCALIZATION FOR VM OPTIMIZATIONS
