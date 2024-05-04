@@ -18,7 +18,8 @@ local a, b = pcall(function()
 	getgenv().weaoName = nil
 end)
 
-local Template, ScrollingFrame, ImageLabel, sGUI, tFolder = loadstring(game:HttpGet("https://github.com/SpinnySpiwal/Public-Scripts/blob/main/WEAO_Roblox/ui.lua?raw=true"))()
+local Template, ScrollingFrame, ImageLabel, sGUI, tFolder =
+	loadstring(game:HttpGet("https://github.com/SpinnySpiwal/Public-Scripts/blob/main/WEAO_Roblox/ui.lua?raw=true"))()
 local hRequest = (http and http.request or http_request) or request
 local req = hRequest({
 	Url = "https://whatexpsare.online/api/status",
@@ -46,8 +47,7 @@ local Template_Clone = Template:Clone()
 Template_Clone.Parent = ScrollingFrame
 
 task.spawn(function()
-	while wait(10) do
-		for _, v in pairs(tFolder:GetChildren()) do if v.Name ~= "Template" the v:Destroy() end
+	local function updateExploitStatus()
 		for _, exploitInfo in next, Body do
 			local isUpdated = exploitInfo.updateStatus == "updated"
 			if isUpdated ~= nil and exploitInfo ~= "ROBLOX" then
@@ -72,8 +72,14 @@ task.spawn(function()
 			local tClone = Template_Clone:FindFirstChild("Updated")
 
 			tClone.Text = tostring(exploitInfo.updatedDate):gsub("-", "/")
-			tClone.Text = tClone.Text .. isUpdated and " - Working" or " - Not Working"
+			tClone.Text = tClone.Text .. (isUpdated and " - Working" or " - Not Working")
 		end
+	end
+	updateExploitStatus()
+
+	while wait(60) do
+		for _, v in pairs(ScrollingFrame:GetChildren()) do if v.ClassName == "Frame" then print(v)v:Destroy() end end
+		updateExploitStatus()
 	end
 end)
 
