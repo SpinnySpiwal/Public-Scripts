@@ -1,9 +1,24 @@
+local function generateRandomString(length)
+    length = length or math.random(8, 15)
+    local charset = ""
+    for i = 1, 255 do
+        charset = charset .. string.char(i)
+    end
+    local str = ""
+    for _=1, length do
+        local randIndex = math.random(1, #charset)
+        local randChar = charset:sub(randIndex, randIndex)
+        str = str .. randChar
+    end
+    return str
+end
+
 local a, b = pcall(function()
-	game:GetService("CoreGui"):FindFirstChild("WhatExploitsAreOnline"):Destroy()
+	game:GetService("CoreGui"):FindFirstChild(getgenv().weaoName):Destroy()
+	getgenv().weaoName = nil
 end)
 
-local Template, ScrollingFrame, ImageLabel = loadstring(game:HttpGet("https://github.com/SpinnySpiwal/Public-Scripts/blob/main/WEAO_Roblox/ui.lua?raw=true"))()
-
+local Template, ScrollingFrame, ImageLabel, sGUI = loadstring(game:HttpGet("https://github.com/SpinnySpiwal/Public-Scripts/blob/main/WEAO_Roblox/ui.lua?raw=true"))()
 local hRequest = (http and http.request or http_request) or request
 local req = hRequest({
 	Url = "https://whatexpsare.online/api/status",
@@ -40,12 +55,12 @@ for _, v in next, Body do
 	end
 
 	Template_Clone.Visible = true
-	Template_Clone.Name = tostring(i2)
-	Template_Clone:FindFirstChild("Signal").BackgroundColor3 = (
+	Template_Clone.Name = generateRandomString()
+	Template_Clone:FindFirstChild("signalOne").BackgroundColor3 = (
 		isUpdated and Color3.fromRGB(59, 234, 87) or Color3.fromRGB(237, 58, 71)
 	)
 
-	Template_Clone:FindFirstChild("Signal2").BackgroundColor3 = (
+	Template_Clone:FindFirstChild("signalTwo").BackgroundColor3 = (
 		isUpdated and Color3.fromRGB(59, 234, 87) or Color3.fromRGB(237, 58, 71)
 	)
 
@@ -63,7 +78,7 @@ for _, v in next, Body do
 	end
 end
 
-for i, v in next, game:GetService("CoreGui").WhatExploitsAreOnline:GetChildren() do
+for i, v in next, sGUI:GetChildren() do
 	v.Name = game:GetService("HttpService"):GenerateGUID()
 end
 

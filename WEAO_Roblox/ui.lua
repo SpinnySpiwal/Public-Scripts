@@ -177,5 +177,6 @@ UITextSizeConstraint_2.Parent = Updated
 UITextSizeConstraint_2.MaxTextSize = 20
 sGUI.Parent = game:GetService("CoreGui")
 sGUI.Name = generateRandomString()
+getgenv().weaoName = sGUI.Name
 
-return Template, ScrollingFrame, ImageLabel
+return Template, ScrollingFrame, ImageLabel, sGUI
