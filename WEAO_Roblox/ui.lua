@@ -115,6 +115,7 @@ UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
 UIListLayout.Padding = UDim.new(0, 5)
 
 Template.Name = "Template"
+Template.Visible = false
 Template.Parent = tFolder
 Template.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 Template.BorderSizePixel = 0
@@ -179,4 +180,4 @@ sGUI.Parent = game:GetService("CoreGui")
 sGUI.Name = generateRandomString()
 getgenv().weaoName = sGUI.Name
 
-return Template, ScrollingFrame, ImageLabel, sGUI
+return Template, ScrollingFrame, ImageLabel, sGUI, tFolder
