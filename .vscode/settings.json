@@ -1,9 +1,0 @@
-{
-    "Lua.diagnostics.globals": [
-        "getgenv",
-        "typeof",
-        "game",
-        "task"
-    ],
-    "docwriter.style": "NumPy"
-}
