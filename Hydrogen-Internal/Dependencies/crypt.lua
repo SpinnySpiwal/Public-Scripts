@@ -70,7 +70,7 @@ end
 function private.bytesToHex(bytes)
 	local hexBytes = ""
 
-	for i, byte in ipairs(bytes) do
+	for _, byte in ipairs(bytes) do
 		hexBytes = hexBytes .. string.format("%02x ", byte)
 	end
 
@@ -116,7 +116,7 @@ function util.padByteString(data)
 
 	local paddingLength = math.ceil(#data / 16) * 16 - #data
 	local padding = ""
-	for i = 1, paddingLength do
+	for _ = 1, paddingLength do
 		padding = padding .. string.char(math.random(0, 255))
 	end
 
@@ -339,7 +339,7 @@ private.rCon = {
 function private.affinMap(byte)
 	mask = 0xf8
 	result = 0
-	for i = 1, 8 do
+	for _ = 1, 8 do
 		result = bit.lshift(result, 1)
 
 		parity = util.byteParity(bit.band(byte, mask))
@@ -820,7 +820,7 @@ end
 --
 
 -- Electronic code book mode encrypt function
-function ciphermode.encryptECB(keySched, byteData, iv)
+function ciphermode.encryptECB(keySched, byteData, _)
 	aes.encrypt(keySched, byteData, 1, byteData, 1)
 end
 
@@ -949,7 +949,7 @@ function private.pwToKey(password, keyLength)
 
 	if padLength > #password then
 		local postfix = ""
-		for i = 1, padLength - #password do
+		for _ = 1, padLength - #password do
 			postfix = postfix .. string.char(0)
 		end
 		password = password .. postfix
@@ -1151,6 +1151,7 @@ function crypt.hash(str, algorithm)
 
 	--> Fix for UNC
 	algorithm = algorithm:gsub("-", "_")
+
 	local algorithmExists = table.find(allAlgorithms, algorithm)
 	assert(algorithmExists, "crypt.hash ~ This algorithm does not exist or is not supported!")
 

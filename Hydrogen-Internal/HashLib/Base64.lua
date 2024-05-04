@@ -1,4 +1,7 @@
 -- @original: https://gist.github.com/Reselim/40d62b17d138cc74335a1b0709e19ce2
+bit = bit or {}
+bit32 = bit32 or bit or {};
+
 local Alphabet = {}
 local Indexes = {}
 
@@ -68,6 +71,7 @@ function Base64.Encode(Input)
 		NewLength = NewLength + 1
 		IndexAdd4096Sub1 = Index + 4096 - 1
 
+---@diagnostic disable-next-line: deprecated
 		NewOutput[NewLength] = string.char(table.unpack(
 			Output,
 			Index,
@@ -121,6 +125,7 @@ function Base64.Decode(Input)
 		NewLength = NewLength + 1
 		IndexAdd4096Sub1 = Index + 4096 - 1
 
+---@diagnostic disable-next-line: deprecated
 		NewOutput[NewLength] = string.char(table.unpack(
 			Output,
 			Index,
