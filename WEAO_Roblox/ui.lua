@@ -178,4 +178,4 @@ UITextSizeConstraint_2.MaxTextSize = 20
 sGUI.Parent = game:GetService("CoreGui")
 sGUI.Name = generateRandomString()
 
-return Template
+return Template, ScrollingFrame, ImageLabel

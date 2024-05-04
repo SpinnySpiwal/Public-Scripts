@@ -2,7 +2,7 @@ local a, b = pcall(function()
 	game:GetService("CoreGui"):FindFirstChild("WhatExploitsAreOnline"):Destroy()
 end)
 
-local Template = loadstring(game:HttpGet("https://github.com/SpinnySpiwal/Public-Scripts/blob/main/WEAO_Roblox/ui.lua?raw=true"))()
+local Template, ScrollingFrame, ImageLabel = loadstring(game:HttpGet("https://github.com/SpinnySpiwal/Public-Scripts/blob/main/WEAO_Roblox/ui.lua?raw=true"))()
 
 local hRequest = (http and http.request or http_request) or request
 local req = hRequest({
