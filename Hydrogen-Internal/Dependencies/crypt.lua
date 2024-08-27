@@ -1076,9 +1076,14 @@ function crypt.encrypt(str, key, iv, encryptionType)
 	assert(typeof(encryptionType) == "string", "crypt.encrypt ~ The encryption type must be a string!")
 
 	iv = iv or crypt.generatekey()
-
 	if encryptionType == "CBC" then
 		return AES.encrypt(key, str, 16, "CBC"), iv
+	elseif encryptionType == "ECB" then
+		return AES.encrypt(key, str, 16, "ECB"), iv
+	elseif encryptionType == "OFB" then
+		return AES.encrypt(key, str, 16, "OFB"), iv
+	elseif encryptionType == "CFB" then
+		return AES.encrypt(key, str, 16, "CFB"), iv
 	else
 		warn("This encryption type isn't supported by Spiwal's Crypt Library yet!")
 		return
@@ -1112,6 +1117,12 @@ function crypt.decrypt(encryptedStr, key, iv, encryptionType)
 
 	if encryptionType == "CBC" then
 		return AES.decrypt(key, encryptedStr, 16, "CBC"), iv
+	elseif encryptionType == "ECB" then
+		return AES.decrypt(key, encryptedStr, 16, "ECB"), iv
+	elseif encryptionType == "OFB" then
+		return AES.decrypt(key, encryptedStr, 16, "OFB"), iv
+	elseif encryptionType == "CFB" then
+		return AES.decrypt(key, encryptedStr, 16, "CFB"), iv
 	else
 		warn("This encryption type isn't supported by Spiwal's Encryption Library yet!")
 		return
