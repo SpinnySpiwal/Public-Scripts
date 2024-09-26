@@ -3,3 +3,4 @@ SmartCache*
 .git2*
 .DS_Store
 Hydrogen-Internal/Dependencies/crypt.lua
+.DS_Store
